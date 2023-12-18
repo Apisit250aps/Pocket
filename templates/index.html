@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We CARE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--  -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <main id="app">
+        
+        <section class="container py-md-5">
+
+            <div class="row px-3 mx-auto">
+                <!-- left -->
+                <div class="col-2">
+                    <div class="bg-dark text-white h-100">
+                        <i class='bx bx-user bx-md'></i>
+                    </div>
+                </div>
+                <!-- middle -->
+                <div class="col-8">
+                    <div class="">
+                        <b>Username</b>
+                        <br>
+                        <p>Sisaket</p>
+                    </div>
+                </div>
+                <!-- right -->
+                <div class="col-2">
+                    <div class="">
+                        <i class='bx bx-heart bx-md' ></i>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row row-cols-2 mx-auto">
+                <!-- L -->
+                <div class="col ">
+                    <div class="p-5 rounded-4 border text-center">asd</div>
+                </div>
+                <!--  -->
+                <div class="col ">
+                    <div class="p-5 rounded-4 border text-center">asd</div>
+                </div>
+
+            </div>
+
+            <br>
+            <button class="btn btn-success">
+                Create repository
+            </button>
+
+            <div class="row mx-auto row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-6">
+
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+                <div class="col">
+                    <i class='bx bx-heart-circle' ></i>
+                </div>
+            </div>
+        
+            <table class="table table-bordered table-hover table-responsive">
+                <thead>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>amount</th>
+                    <th>type</th>
+                    <th>remark</th>
+                    <th>date</th>
+                </thead>
+                <tbody>
+                    <!--  -->
+                    <tr v-for="(item, index) in bill" :key="index">
+                        <td>[{ index + 1 }]</td>
+                        <td>[{item.name}]</td>
+                        <td>[{item.amount}]</td>
+                        <td>[{item.type}]</td>
+                        <td>[{item.remark}]</td>
+                        <td>[{ new Date(item.date ).toLocaleString('en-GB', { timeZone: 'UTC' }) }]</td>
+                    </tr>
+                    <!--  -->
+                </tbody>
+                <button class="btn btn-danger" @click="subForm()">
+                    submit
+                </button>
+            </table>
+        </section>
+    </main>
+    <!--  -->
+    <script>
+        const { createApp } = Vue;
+
+        const app = createApp(
+            {
+                delimiters: ["[{", "}]"],
+
+                data() {
+                    return {
+                        bill: [],
+
+                        name: "hello",
+                        amount: 500,
+                        type: 1,
+                        remark: "-"
+                    };
+                },
+                mounted() {
+                    axios(
+                        {
+                            method: "get",
+                            url: "{% url 'get-bill-api' %}"
+                        }
+                    ).then((response) => {
+                        if (response.data['status']) {
+                            this.bill = response.data['data'];
+                        }
+                    });
+                },
+                methods: {
+                    subForm() {
+
+                        const form_data = new FormData;
+                        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+                        form_data.append("name", this.name);
+                        form_data.append("amount", this.amount);
+                        form_data.append("type", this.type);
+                        form_data.append("remark", this.remark);
+
+                        axios(
+                            {
+                                method: "post",
+                                url: "{% url 'create-bill-api' %}",
+                                data: form_data
+                            }
+                        ).then((response) => {
+                            if (response.data['status']) {
+                                alert("Success");
+                            }
+                        });
+
+                    }
+
+                }
+            }
+        );
+
+        app.mount("#app")
+
+    </script>
+</body>
+
+</html>
