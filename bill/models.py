@@ -11,3 +11,4 @@ class Bill(models.Model):
     ))
     remark = models.TextField(default="-")
     date = models.DateTimeField(auto_now=True)
+    user = models.CharField(max_length=255, default="admin")

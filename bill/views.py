@@ -20,6 +20,15 @@ from . import serializers
 @api_view(["GET", ])
 @permission_classes((AllowAny,))
 def showBill(request):
+    
+    try :
+        user = User.objects.get(id=request.session['_auth_user_id']).username
+        print (user)
+    except:
+        return Response({
+            "status":False
+        })
+    
     try :   
         bill = models.Bill.objects.all().order_by('-id')
         billData = serializers.billSerializers(bill, many=True).data
@@ -51,11 +60,45 @@ def showBill(request):
     )
 
 
+@csrf_exempt
+@api_view(["POST",])
+@permission_classes((AllowAny,))
+def userLogin(request):
+
+    username = request.data['username']
+    password = request.data['password']
+
+    user = authenticate(
+        username=username,
+        password=password
+    )
+
+    if user is not None:
+        if user.is_active:
+            status = True
+            msg = 'user is logined'
+            login(request, user)
+        else:
+            status = False
+            msg = 'Currently, This user is not active'
+    else:
+        status = False
+        msg = 'Error wrong username/password'
+
+    return Response({'status': status, 'message': msg})
+
 
 @csrf_exempt
 @api_view(["POST", ])
 @permission_classes((AllowAny,))
 def createBill(request):
+    try :
+        user = User.objects.get(id=request.session['_auth_user_id']).username
+        print (user)
+    except:
+        return Response({
+            "status":False
+        })
     try :
         name = request.data['name']
         amount = request.data['amount']
@@ -64,12 +107,13 @@ def createBill(request):
         
         if type == 2:
             amount = amount*-1
-            
+
         models.Bill.objects.create(
             name=name,
             amount=amount,
             type=type,
-            remark=remark
+            remark=remark,
+            user=user
         )
         
         

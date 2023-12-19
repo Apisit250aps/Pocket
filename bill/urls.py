@@ -21,4 +21,5 @@ from . import views as api
 urlpatterns = [
     path('bill', api.showBill, name='get-bill-api'),
     path('create', api.createBill, name='create-bill-api'),
+    path('login', api.userLogin, name='user-login-api'),
 ]

@@ -45,6 +45,40 @@
     <main id="app">
 
         <section class="container py-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden
+                id="open">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <form class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput"
+                                    placeholder="name@example.com" v-model="username">
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingPassword"
+                                    placeholder="Password" v-model="password">
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" @click="login($event)">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <!--  -->
             <div class="modal fade modal-lg" id="writer" tabindex="-1" aria-labelledby="writerLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -108,7 +142,8 @@
 
             <div class="row mx-auto row-cols-1 mt-1">
                 <div class="col ">
-                    <div class="bg-dark py-2 px-3 fs-2 rounded-4 text-white text-end" v-if="amounted != null">[{ amounted.balance }] ฿</div>
+                    <div class="bg-dark py-2 px-3 fs-2 rounded-4 text-white text-end" v-if="amounted != null">[{
+                        amounted.balance }] ฿</div>
                 </div>
             </div>
             <br>
@@ -173,6 +208,11 @@
                     return {
                         bill: [],
 
+                        username: "",
+                        username_isValid: true,
+                        password: "",
+                        password_isValid: true,
+
                         name: "",
                         amount: "",
                         type: "",
@@ -184,7 +224,7 @@
                         remark_isValid: true,
                         isValid: true,
 
-                        amounted:null
+                        amounted: null
                     };
                 },
                 mounted() {
@@ -196,11 +236,66 @@
                     ).then((response) => {
                         if (response.data['status']) {
                             this.bill = response.data['data'];
-                            this.amounted = response.data['amount']
+                            this.amounted = response.data['amount'];
+                        }
+                        else {
+                            document.getElementById('open').click();
                         }
                     });
                 },
                 methods: {
+                    login(e) {
+                        e.preventDefault();
+                        let isValid = true;
+
+                        this.username_isValid = true;
+                        if (this.username == "") {
+                            this.username_isValid = false;
+                            isValid = false;
+                        }
+                        this.password_isValid = true;
+                        if (this.password == "") {
+                            this.password_isValid = false;
+                            isValid = false;
+                        }
+
+                        if (isValid) {
+                            const form_data = new FormData;
+                            form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+                            form_data.append("username", this.username);
+                            form_data.append("password", this.password);
+
+                            axios(
+                                {
+                                    method: "post",
+                                    url: "{% url 'user-login-api' %}",
+                                    data: form_data
+                                }
+                            ).then((response) => {
+                                if (response.data['status']) {
+                                    Swal.fire({
+                                        title: "Success!",
+                                        text: "Login success!",
+                                        icon: "success"
+                                    });
+
+                                    setTimeout(
+                                        location.reload(),
+                                        1000
+                                    );
+                                }
+                                else {
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "Something Error!",
+                                        icon: "error"
+                                    });
+                                }
+                            });
+
+                        }
+                    },
+
                     write(e) {
 
                         e.preventDefault();
@@ -259,7 +354,7 @@
                                     ).then((response) => {
                                         if (response.data['status']) {
                                             this.bill = response.data['data'];
-                                            this.amounted = response.data['amount']
+                                            this.amounted = response.data['amount'];
                                         }
                                     });
                                 }
