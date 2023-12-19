@@ -27,7 +27,7 @@ def showBill(request):
         expenses = 0
         income = 0
         
-        for item in models.Bill.objects.all().order_by('-id'):
+        for item in models.Bill.objects.all().order_by('-date'):
             if item.type == 1:
                 income += item.amount
             else :
