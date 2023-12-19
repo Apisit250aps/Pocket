@@ -16,137 +16,149 @@
     <!--  -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
+        * {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        * {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+    </style>
 </head>
 
 <body>
     <main id="app">
-        
-        <section class="container py-md-5">
 
-            <div class="row px-3 mx-auto">
-                <!-- left -->
+        <section class="container py-5">
+            <!--  -->
+            <div class="modal fade modal-lg" id="writer" tabindex="-1" aria-labelledby="writerLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <form class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="writerLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div>
+                                <input type="text" placeholder="Name" class="form-control mb-2" v-model="name">
+                                <input type="number" placeholder="Amount" class="form-control mb-2" v-model="amount">
+                                <select name="" id="" class="form-select mb-2" v-model="type">
+                                    <option value="1">รายรับ</option>
+                                    <option value="2">รายจ่าย</option>
+                                </select>
+                                <textarea v-model="remark" name="" id="" cols="30" rows="3" class="form-control"
+                                    placeholder="Remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" @click="write($event)">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--  -->
+            <div class="row mx-auto py-3">
                 <div class="col-2">
-                    <div class="bg-dark text-white h-100">
-                        <i class='bx bx-user bx-md'></i>
+                    <div class="">
+
                     </div>
                 </div>
-                <!-- middle -->
                 <div class="col-8">
                     <div class="">
-                        <b>Username</b>
-                        <br>
-                        <p>Sisaket</p>
+
                     </div>
                 </div>
-                <!-- right -->
                 <div class="col-2">
-                    <div class="">
-                        <i class='bx bx-heart bx-md' ></i>
+                    <div class="d-flex flex-row justify-content-end">
+                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#writer">
+                            <i class='bx bxs-edit-alt'></i>
+                        </button>
                     </div>
                 </div>
             </div>
-            <br>
-
-            <div class="row row-cols-2 mx-auto">
-                <!-- L -->
-                <div class="col ">
-                    <div class="p-5 rounded-4 border text-center">asd</div>
+            <div class="row row-cols-2 mx-auto" v-if="amounted != null">
+                <div class="col">
+                    <div class="border rounded-4 bg-dark text-white py-4 px-3 text-center ">
+                        [{amounted.income }]
+                    </div>
                 </div>
-                <!--  -->
-                <div class="col ">
-                    <div class="p-5 rounded-4 border text-center">asd</div>
+                <div class="col">
+                    <div class="border rounded-4 bg-dark text-white py-4 px-3 text-center ">
+                        [{amounted.expenses }]
+                    </div>
                 </div>
-
             </div>
 
-            <br>
-            <button class="btn btn-success">
-                Create repository
-            </button>
-
-            <div class="row mx-auto row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-6">
-
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
-                </div>
-                <div class="col">
-                    <i class='bx bx-heart-circle' ></i>
+            <div class="row mx-auto row-cols-1 mt-1">
+                <div class="col ">
+                    <div class="bg-dark py-2 px-3 fs-2 rounded-4 text-white text-end" v-if="amounted != null">[{ amounted.balance }] ฿</div>
                 </div>
             </div>
-        
-            <table class="table table-bordered table-hover table-responsive">
-                <thead>
-                    <th>#</th>
-                    <th>name</th>
-                    <th>amount</th>
-                    <th>type</th>
-                    <th>remark</th>
-                    <th>date</th>
-                </thead>
-                <tbody>
-                    <!--  -->
-                    <tr v-for="(item, index) in bill" :key="index">
-                        <td>[{ index + 1 }]</td>
-                        <td>[{item.name}]</td>
-                        <td>[{item.amount}]</td>
-                        <td>[{item.type}]</td>
-                        <td>[{item.remark}]</td>
-                        <td>[{ new Date(item.date ).toLocaleString('en-GB', { timeZone: 'UTC' }) }]</td>
-                    </tr>
-                    <!--  -->
-                </tbody>
-                <button class="btn btn-danger" @click="subForm()">
-                    submit
-                </button>
-            </table>
+            <br>
+            <div class="row mx-auto">
+                <div class="col">
+                    <div class="border rounded-4 overflow-scroll" style="height: 60dvh;">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item" v-for="(item, index) in bill" :key="index">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        :data-bs-target="`#bill-${index}`" aria-expanded="false"
+                                        :aria-controls="`bill-${index}`">
+
+                                        <b :class="{ 'text-success':item.type == 1, 'text-danger':item.type == 2 }">[{
+                                            item.name }]</b>
+                                    </button>
+                                </h2>
+                                <div :id="`bill-${index}`" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body p-1">
+                                        <div class="border rounded-4 p-2 my-1">
+                                            <b>ประเภท</b>
+                                            <hr>
+                                            <p v-if="item.type == 1" class="text-success">รายรับ</p>
+                                            <p v-if="item.type == 2" class="text-danger">รายจ่าย</p>
+                                        </div>
+                                        <div class="p-2 border rounded-4 p-2 my-1">
+                                            <b>มูลค่า</b>
+                                            <hr>
+                                            <p>[{item.amount}] ฿</p>
+                                        </div>
+                                        <div class="p-2 border rounded-4 p-2 my-1">
+                                            <b>เวลา</b>
+                                            <hr>
+                                            <p>[{item.date}]</p>
+                                        </div>
+                                        <div class="p-2 border rounded-4 p-2 my-1">
+                                            <b>หมายเหตุ</b>
+                                            <hr>
+                                            <p>[{item.remark}]</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
     </main>
     <!--  -->
@@ -161,10 +173,18 @@
                     return {
                         bill: [],
 
-                        name: "hello",
-                        amount: 500,
-                        type: 1,
-                        remark: "-"
+                        name: "",
+                        amount: "",
+                        type: "",
+                        remark: "",
+
+                        name_isValid: true,
+                        amount_isValid: true,
+                        type_isValid: true,
+                        remark_isValid: true,
+                        isValid: true,
+
+                        amounted:null
                     };
                 },
                 mounted() {
@@ -176,30 +196,79 @@
                     ).then((response) => {
                         if (response.data['status']) {
                             this.bill = response.data['data'];
+                            this.amounted = response.data['amount']
                         }
                     });
                 },
                 methods: {
-                    subForm() {
+                    write(e) {
 
-                        const form_data = new FormData;
-                        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
-                        form_data.append("name", this.name);
-                        form_data.append("amount", this.amount);
-                        form_data.append("type", this.type);
-                        form_data.append("remark", this.remark);
+                        e.preventDefault();
 
-                        axios(
-                            {
-                                method: "post",
-                                url: "{% url 'create-bill-api' %}",
-                                data: form_data
-                            }
-                        ).then((response) => {
-                            if (response.data['status']) {
-                                alert("Success");
-                            }
-                        });
+                        this.isValid = true;
+
+                        this.name_isValid = true;
+                        if (this.name == "") {
+                            this.name_isValid = false;
+                            this.isValid = false;
+                        }
+
+                        this.amount_isValid = true;
+                        if (this.amount <= 0) {
+                            this.amount_isValid = false;
+                            this.isValid = false;
+                        }
+
+                        this.type_isValid = true;
+                        if (this.type == "") {
+                            this.type_isValid = false;
+                            this.isValid = false;
+                        }
+
+
+                        if (this.isValid) {
+                            const form_data = new FormData;
+                            form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+                            form_data.append("name", this.name);
+                            form_data.append("amount", this.amount);
+                            form_data.append("type", this.type);
+                            form_data.append("remark", this.remark);
+
+                            axios(
+                                {
+                                    method: "post",
+                                    url: "{% url 'create-bill-api' %}",
+                                    data: form_data
+                                }
+                            ).then((response) => {
+                                if (response.data['status']) {
+                                    this.name = "";
+                                    this.amount = "";
+                                    this.type = "";
+                                    this.remark = "";
+                                    Swal.fire({
+                                        title: "Success!",
+                                        text: "Save Successfully",
+                                        icon: "success"
+                                    });
+                                    axios(
+                                        {
+                                            method: "get",
+                                            url: "{% url 'get-bill-api' %}"
+                                        }
+                                    ).then((response) => {
+                                        if (response.data['status']) {
+                                            this.bill = response.data['data'];
+                                        }
+                                    });
+                                }
+                            });
+                        }
+
+
+
+
+
 
                     }
 

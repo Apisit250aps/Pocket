@@ -20,10 +20,19 @@ from . import serializers
 @api_view(["GET", ])
 @permission_classes((AllowAny,))
 def showBill(request):
-    try :
-        
-        bill = models.Bill.objects.all()
+    try :   
+        bill = models.Bill.objects.all().order_by('-id')
         billData = serializers.billSerializers(bill, many=True).data
+        
+        expenses = 0
+        income = 0
+        
+        for item in models.Bill.objects.all().order_by('-id'):
+            if item.type == 1:
+                income += item.amount
+            else :
+                expenses += item.amount
+            
         status = True
     except :
         status = False
@@ -31,7 +40,13 @@ def showBill(request):
     return Response(
         {
             "status":status,
-            "data":billData
+            "data":billData,
+            "amount":{
+                "income":income,
+                "expenses":expenses,
+                "balance":income-expenses,
+            }
+            
         }
     )
 
@@ -47,12 +62,18 @@ def createBill(request):
         type = request.data['type']
         remark = request.data['remark']
         
+        if type == 2:
+            amount = amount*-1
+            
         models.Bill.objects.create(
             name=name,
             amount=amount,
             type=type,
             remark=remark
         )
+        
+        
+        
         status = True
         # models.Bill.
     except :
@@ -64,6 +85,8 @@ def createBill(request):
             # "data":billData
         }
     )
+    
+    
     
     
 def indexPage(req):
