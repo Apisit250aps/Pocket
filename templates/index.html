@@ -259,6 +259,7 @@
                                     ).then((response) => {
                                         if (response.data['status']) {
                                             this.bill = response.data['data'];
+                                            this.amounted = response.data['amount']
                                         }
                                     });
                                 }
