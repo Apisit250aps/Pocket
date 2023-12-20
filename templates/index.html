@@ -57,7 +57,7 @@
                 <div class="modal-dialog">
                     <form class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Login As Admin</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -67,14 +67,14 @@
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword"
-                                    placeholder="Password" v-model="password">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                    v-model="password">
                                 <label for="floatingPassword">Password</label>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" @click="login($event)">Save changes</button>
+                            <button type="submit" class="btn btn-primary" @click="login($event)">Save changes</button>
                         </div>
                     </form>
                 </div>
@@ -110,14 +110,24 @@
             <!--  -->
             <div class="row mx-auto py-3">
                 <div class="col-2">
-                    <div class="">
 
+                    <div class="d-flex flex-row justify-content-start">
+                        <a class="btn " href="/admin">
+                            <i class='bx bx-user-circle bx-lg'></i>
+                        </a>
                     </div>
+
                 </div>
                 <div class="col-8">
-                    <div class="">
-
+                    
+                    {% if user.is_authenticated %}
+                    <div class="d-flex flex-row justify-content-start border rounded-3 align-items-center">
+                        <a class="btn text-uppercase" href="/admin">
+                            {{user.username}}
+                        </a>
                     </div>
+                    {% endif %}
+    
                 </div>
                 <div class="col-2">
                     <div class="d-flex flex-row justify-content-end">
