@@ -109,7 +109,7 @@
             </div>
             <!--  -->
             <div class="row mx-auto py-3">
-                <div class="col-2">
+                <!-- <div class="col-2">
 
                     <div class="d-flex flex-row justify-content-start">
                         <a class="btn " href="/admin">
@@ -128,9 +128,16 @@
                     </div>
                     {% endif %}
     
+                </div> -->
+                <div class="col-10">
+                    <div class="d-flex flex-row align-items-center justify-content-start">
+                        <a href="/admin" class=" text-black text-uppercase nav-link">
+                            <i class='bx-fw bx bx-user bx-md'></i>{{user.username}}
+                        </a>
+                    </div>
                 </div>
                 <div class="col-2">
-                    <div class="d-flex flex-row justify-content-end">
+                    <div class="d-flex flex-row justify-content-end align-items-center">
                         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#writer">
                             <i class='bx bxs-edit-alt'></i>
                         </button>
@@ -166,7 +173,6 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         :data-bs-target="`#bill-${index}`" aria-expanded="false"
                                         :aria-controls="`bill-${index}`">
-
                                         <b :class="{ 'text-success':item.type == 1, 'text-danger':item.type == 2 }">[{
                                             item.name }]</b>
                                     </button>
@@ -194,6 +200,12 @@
                                             <b>หมายเหตุ</b>
                                             <hr>
                                             <p>[{item.remark}]</p>
+                                        </div>
+                                        <div class="p-2 border rounded-4 p-2 my-1">
+                                            <b>บันทึกโดย</b>
+                                            <hr>
+                                            <i class='bx-fw bx bx-user'></i>[{item.user}]
+
                                         </div>
 
                                     </div>
