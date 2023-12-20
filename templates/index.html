@@ -102,7 +102,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" @click="write($event)">Save changes</button>
+                            <button type="submit" class="btn btn-dark" @click="write($event)">Log in</button>
                         </div>
                     </form>
                 </div>
@@ -350,6 +350,10 @@
                             form_data.append("amount", this.amount);
                             form_data.append("type", this.type);
                             form_data.append("remark", this.remark);
+                            this.name = "";
+                            this.amount = "";
+                            this.type = "";
+                            this.remark = "";
 
                             axios(
                                 {
@@ -359,10 +363,7 @@
                                 }
                             ).then((response) => {
                                 if (response.data['status']) {
-                                    this.name = "";
-                                    this.amount = "";
-                                    this.type = "";
-                                    this.remark = "";
+
                                     Swal.fire({
                                         title: "Success!",
                                         text: "Save Successfully",
