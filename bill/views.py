@@ -19,43 +19,73 @@ from . import serializers
 @csrf_exempt
 @api_view(["GET", ])
 @permission_classes((AllowAny,))
+def openBill(request):
+    bill = models.Bill.objects.all().order_by('-id')
+    billData = serializers.billSerializers(bill, many=True).data
+
+    expenses = 0
+    income = 0
+
+    for item in models.Bill.objects.all().order_by('-date'):
+        if item.type == 1:
+            income += item.amount
+        else:
+            expenses += item.amount
+
+    status = True
+    return Response(
+        {
+            "status": status,
+            "data": billData,
+            "amount": {
+                "income": income,
+                "expenses": expenses,
+                "balance": income-expenses,
+            }
+        }
+    )
+
+
+@csrf_exempt
+@api_view(["GET", ])
+@permission_classes((AllowAny,))
 def showBill(request):
-    
-    try :
+
+    try:
         user = User.objects.get(id=request.session['_auth_user_id']).username
-        print (user)
+        print(user)
     except:
         return Response({
-            "status":False
+            "status": False
         })
-    
-    try :   
+
+    try:
         bill = models.Bill.objects.all().order_by('-id')
         billData = serializers.billSerializers(bill, many=True).data
-        
+
         expenses = 0
         income = 0
-        
+
         for item in models.Bill.objects.all().order_by('-date'):
             if item.type == 1:
                 income += item.amount
-            else :
+            else:
                 expenses += item.amount
-            
+
         status = True
-    except :
+    except:
         status = False
-        
+
     return Response(
         {
-            "status":status,
-            "data":billData,
-            "amount":{
-                "income":income,
-                "expenses":expenses,
-                "balance":income-expenses,
+            "status": status,
+            "data": billData,
+            "amount": {
+                "income": income,
+                "expenses": expenses,
+                "balance": income-expenses,
             }
-            
+
         }
     )
 
@@ -92,19 +122,19 @@ def userLogin(request):
 @api_view(["POST", ])
 @permission_classes((AllowAny,))
 def createBill(request):
-    try :
+    try:
         user = User.objects.get(id=request.session['_auth_user_id']).username
-        print (user)
+        print(user)
     except:
         return Response({
-            "status":False
+            "status": False
         })
-    try :
+    try:
         name = request.data['name']
         amount = request.data['amount']
         type = request.data['type']
         remark = request.data['remark']
-        
+
         if type == 2:
             amount = amount*-1
 
@@ -115,24 +145,20 @@ def createBill(request):
             remark=remark,
             user=user
         )
-        
-        
-        
+
         status = True
         # models.Bill.
-    except :
+    except:
         status = False
-        
+
     return Response(
         {
-            "status":status,
+            "status": status,
             # "data":billData
         }
     )
-    
-    
-    
-    
+
+
 def indexPage(req):
-    
+
     return render(req, 'index.html')
